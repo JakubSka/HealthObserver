@@ -1,0 +1,46 @@
+﻿@page
+@using HealthObserver.Models
+@model HealthObserver.Pages.Doctor.Diagrams.DiagramSurveyModel
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	ViewData["Title"] = "Survey Diagrams";
+}
+
+
+
+
+<div class="bg-light p-4">
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h1 class="display-5 custom-header mb-4">Survey Diagrams</h1>
+
+		<div>
+			<a class="btn custom-btn-success" asp-page="./DiagramSurvey" asp-route-UserId="@Model.UserId" asp-route-DiagramSortOrder="oldest">Oldest</a>
+			<a class="btn custom-btn-success" asp-page="./DiagramSurvey" asp-route-UserId="@Model.UserId" asp-route-DiagramSortOrder="newest">Newest</a>
+		</div>
+	</div>
+
+	<table class="table table-hover">
+		<thead class="thead-light">
+			<tr>
+				<th class="text-center">ID</th>
+				<th class="text-center">Patient</th>
+				<th class="text-center">Response Date</th>
+				<th class="text-center">Diagram</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var survey in Model.Surveys)
+			{
+				<tr>
+					<td class="text-center">@survey.PatientSurveyId</td>
+					<td class="text-center">@Model.user.FirstName @Model.user.LastName</td>
+					<td class="text-center">@survey.ResponseDate.ToString("yyyy-MM-dd")</td>
+					<td class="text-center">
+						<a href="@Url.Page("/Doctor/Diagrams/DisplayDiagram", new { surveyId = survey.PatientSurveyId, userId = @Model.user.Id })" class="btn custom-btn-primary">Display Diagram</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

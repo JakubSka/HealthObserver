@@ -1,0 +1,37 @@
+﻿@page
+@using HealthObserver.Models
+@model HealthObserver.Pages.Patient.DashboardPatientModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+	ViewData["Title"] = "Survey";
+}
+
+@{
+	var currentUser = await UserManager.GetUserAsync(User);
+}
+
+
+<div class="bg-light p-4">
+	<div class=" mb-4">
+		<h1 class="display-4 custom-header mb-3">Welcome to Patient Dashboard</h1>
+		<h1 class="mb-4 custom-font-light">Hello @currentUser.FirstName @currentUser.LastName</h1>
+		
+	</div>
+	<hr class="mb-5" style="color: #43ABAB; background-color: #43ABAB; height: 2px; border: none;" />
+
+	<div class="row">
+		<div class="col-md-6 d-flex justify-content-center align-items-center">
+			<div class="bg-custom text-center  p-4">
+				<h2 class="text-light">Today's Surveys</h2>
+				<h1 class="display-1 text-light">@Model.TodaySurveyCount / 5</p>
+			</div>
+		</div>
+		<div class="col-md-6 d-flex justify-content-center align-items-center">
+			<div class="bg-custom  text-center  p-4">
+				<h2 class=" text-light">Today's Medications</h2>
+				<h1 class="display-1 text-light">@Model.TodayMedicationCount / @Model.TodayMedicationAllCount</h1>
+			</div>
+		</div>
+	</div>
+
+</div>

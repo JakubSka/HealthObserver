@@ -1,0 +1,112 @@
+﻿@page
+@using HealthObserver.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model HealthObserver.Pages.Doctor.Prescription.AddModel
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	ViewData["Title"] = "Add Prescription";
+}
+
+
+
+
+@if (TempData["ShowAlert"] != null && (bool)TempData["ShowAlert"])
+{
+	<div class="overlay">
+		<div class="alert-container">
+			<div class="alert alert-@TempData["AlertType"]">
+				<span class="close-btn" onclick="closeAlert()">×</span>
+				@TempData["AlertMessage"]
+			</div>
+		</div>
+	</div>
+	<script>
+		function closeAlert() {
+			document.querySelector('.overlay').style.display = 'none';
+		}
+	</script>
+}
+
+
+<h3>Medication History</h3>
+<div>
+	Sort by:
+	<a asp-page="./Add" asp-route-UserId="@Model.UserId" asp-route-MedicationHistorySortOrder="oldest">Oldest</a> |
+	<a asp-page="./Add" asp-route-UserId="@Model.UserId" asp-route-MedicationHistorySortOrder="newest">Newest</a>
+</div>
+<table class="table">
+	<thead>
+	<tr>
+		<th>Date Taken</th>
+		<th>Medicine</th>
+		<th>Amount Taken</th>
+		<th>Start Prescriptions</th>
+		<th>End Prescriptions</th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var history in Model.MedicationHistory)
+	{
+		<tr>
+			<td>@history.TakenDateTime</td>
+			<td>@history.Prescription.Medicine.Name - @history.Prescription.Dose @history.Prescription.DoseUnit</td>
+			<td>
+				@if (history.AmountTaken == 0)
+				{
+					<span style="color: red;">@history.AmountTaken</span>
+				}
+				else if (history.AmountTaken != history.Prescription.Dose)
+				{
+					<span style="color: darkorange;">@history.AmountTaken</span>
+				}
+				else
+				{
+					<span style="color: green;">@history.AmountTaken</span>
+				}
+			</td>
+			<td>@history.Prescription.StartPrescription</td>
+			<td>@history.Prescription.EndPrescription</td>
+			
+		</tr>
+	}
+	</tbody>
+</table>
+
+<div class="modal fade" id="editModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Prescription</h4>
+			</div>
+			<div class="modal-body">
+				<form id="editForm" method="post">
+					<div class="form-group">
+						<label for="Dose">Dose:</label>
+						<input type="number" step="0.1" asp-for="Dose" />
+						<label for="DoseUnit">DoseUnit:</label>
+						<input type="number" step="0.1" asp-for="DoseUnit" />
+						<label for="FrequencyInHours">FrequencyInHours:</label>
+						<input type="number" step="0.1" asp-for="FrequencyInHours" />
+						<label for="StartPrescription">StartPrescription:</label>
+						<input type="date" step="0.1" asp-for="StartPrescription" />
+						<label for="EndPrescription">EndPrescription:</label>
+						<input type="date" step="0.1" asp-for="EndPrescription" />
+					</div>
+					<div class="form-group">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save Changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function openEditModal(PrescriptionId) {
+		//var form = document.getElementById('editForm');
+		//form.action = '/Doctor/Prescription/Add?handler=Edit&Id=' + PrescriptionId;
+		$('#editModal').modal('show');
+	}
+</script>			

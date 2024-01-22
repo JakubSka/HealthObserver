@@ -1,0 +1,56 @@
+﻿@page
+@using HealthObserver.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model HealthObserver.Pages.Doctor.IndexDoctorModel
+@{
+	ViewData["Title"] = "Doctor Dashboard";
+	int userCount = 0;
+}
+
+<div class="bg-light p-4 ">
+	<h1 class="display-4 custom-header mb-4">Welcome to the Doctor Dashboard</h1>
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h2 class="custom-font-light ">Patients</h2>
+
+		<form class="form-inline d-flex align-items-center" method="get">
+			<div class="col-sm-9">
+				<div class="form-group mx-2">
+					<input class="form-control" type="text" placeholder="Search by First/Last Name" name="SearchQuery" value="@Model.SearchQuery" />
+				</div>
+			</div>
+			<button type="submit" class="btn custom-btn-success h-100">Search</button>
+		</form>
+	</div>
+
+
+
+	<table class="table table-hover">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col" class="text-center">#</th>
+				<th scope="col" class="text-center">First Name</th>
+				<th scope="col" class="text-center">Last Name</th>
+				<th scope="col" class="text-center">E-mail</th>
+				<th scope="col" class="text-center">View Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model.UsersWithRolePatient)
+			{
+				<tr>
+					<th scope="row" class="text-center">@(++userCount)</th>
+					<td class="text-center">@user.FirstName</td>
+					<td class="text-center">@user.LastName</td>
+					<td class="text-center">@user.Email</td>
+					<td class="text-center">
+						<a href="@Url.Page("/Doctor/PatientProfile/PatientProfile", new { userId = user.Id })" class="btn custom-btn-primary">
+							Patient Profile
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+

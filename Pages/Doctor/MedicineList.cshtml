@@ -1,0 +1,128 @@
+﻿@page
+@model HealthObserver.Pages.Doctor.MedicineListModel
+@{
+	ViewData["Title"] = "Medicine List";
+	int medicineCount = 0;
+}
+<div class="bg-light p-4">
+	<div class="d-flex justify-content-between align-items-center">
+		<h2 class="display-4 custom-header mb-4">Medicine List</h2>
+		<button type="button" class="btn custom-btn-primary" onclick="openCreateModal()">Create Medicine</button>
+	</div>
+
+
+	<table class="table table-hover">
+		
+
+		<thead class="thead-light">
+		<tr>
+			<th scope="col" class="text-center">#</th>
+			<th scope="col" class="text-center">Name</th>
+			<th scope="col" class="text-center">Description</th>
+			<th scope="col" class="text-center">Edit</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach (var medicine in Model.Medicines)
+		{
+			<tr>
+				<th scope="row" class="text-center">@(++medicineCount)</th>
+				<td class="text-center">@medicine.Name</td>
+				<td class="text-center">@medicine.Description</td>
+				<td class="text-center">
+					<button type="button" class="btn custom-btn-primary" onclick="openEditModal(@medicine.MedicineId)">
+						Edit
+					</button>
+				</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>
+
+<!--dodawanie medicine-->
+<div class="modal fade" id="createModal" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="createModalLabel">Create Medicine</h5>
+				<!--
+						<button type="button" class="close cancel-btn" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				-->
+			</div>
+			<div class="modal-body ">
+				<form method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+					<div class="form-group mb-4">
+						<label asp-for="Medicine.Name" class="control-label"></label>
+						<input asp-for="Medicine.Name" class="form-control" />
+						<span asp-validation-for="Medicine.Name" class="text-danger"></span>
+					</div>
+					<div class="form-group mb-4">
+						<label asp-for="Medicine.Description" class="control-label"></label>
+						<textarea asp-for="Medicine.Description" class="form-control"></textarea>
+						<span asp-validation-for="Medicine.Description" class="text-danger"></span>
+					</div>
+					<div class="form-group text-center mb-2">
+						<button type="submit" class="btn custom-btn-primary w-100">Create</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--edycja medicine-->
+@foreach (var medicine in Model.Medicines)
+{
+	<div class="modal fade" id="editModal_@medicine.MedicineId" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Medicine</h5>
+					<!--
+						<button type="button" class="close cancel-btn" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					-->
+
+				</div>
+				<div class="modal-body">
+					<form method="post" asp-page-handler="Edit" asp-route-medicineId="@medicine.MedicineId">
+						<input type="hidden" name="MedicineId" value="@medicine.MedicineId" />
+						<div class="form-group mb-4">
+							<label for="Name">Medicine Name:</label>
+							<input type="text" class="form-control" id="name" name="Name" value="@medicine.Name" />
+						</div>
+						<div class="form-group mb-4">
+							<label for="Name">Medicine Description:</label>
+							<textarea class="form-control" id="description" name="Description">@medicine.Description</textarea>
+						</div>
+						<div class="form-group text-center mb-2">
+							<button type="submit" class="btn custom-btn-primary  w-100">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('.cancel-btn').click(function () {
+			$(this).closest('.modal').modal('hide');
+		});
+	});
+
+	function openEditModal(medicineId) {
+		$('#editModal_' + medicineId).modal('show');
+	}
+
+	function openCreateModal() {
+		$('#createModal').modal('show');
+	}
+</script>

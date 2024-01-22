@@ -1,0 +1,177 @@
+﻿@page
+@model HealthObserver.Pages.Patient.MySurveyModel
+@{
+    ViewData["Title"] = "My Survey";
+}
+
+@if (TempData["ShowAlert"] != null && (bool)TempData["ShowAlert"])
+{
+    <div class="overlay">
+        <div class="alert-container">
+            <div class="alert alert-@TempData["AlertType"]">
+                <span class="close-btn" onclick="closeAlert()">×</span>
+                @TempData["AlertMessage"]
+            </div>
+        </div>
+    </div>
+    <script>
+        function closeAlert() {
+            document.querySelector('.overlay').style.display = 'none';
+        }
+    </script>
+}
+
+<div class="bg-light p-4 text-center">
+    <div class="custom-margin">
+        <div class="container text-center">
+            <h2 class="display-5 custom-header mb-4">Survey Form</h2>
+        </div>
+
+
+        <form method="post">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="form-group mb-3 d-flex align-items-center mr-3">
+                    <label class="mx-2" for="PatientSurvey.ResponseDate" style="white-space: nowrap;">Survey Date:</label>
+                    <input type="date" class="form-control mx-2" asp-for="PatientSurvey.ResponseDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="form-group mb-3 text-center d-flex align-items-center">
+                    <label class="mx-2 mr-3" for="PatientSurvey.SurveyHour" style="white-space: nowrap;">Survey Time:</label>
+                    <select class="form-control mx-2" asp-for="PatientSurvey.SurveyHour">
+                        <option value="8">8:00 AM</option>
+                        <option value="11">11:00 AM</option>
+                        <option value="14">2:00 PM</option>
+                        <option value="17">5:00 PM</option>
+                        <option value="20">8:00 PM</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.GeneralWellBeingRating"> <strong>General Well-Being</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <!--
+                                <div>
+                            @if (i == 1)
+                            {
+                                            <span>Low</span>
+                            }
+                            else if (i == 10)
+                            {
+                                            <span>High</span>
+                            }
+                            </div>
+                            -->
+
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.GeneralWellBeingRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Headache Rating -->
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.HeadacheRating"><strong>Headache</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.HeadacheRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Abdominal Pain Rating -->
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.AbdominalPainRating"><strong>Abdominal Pain</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.AbdominalPainRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Nausea Rating -->
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.NauseaRating"><strong>Nausea</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.NauseaRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Fatigue Rating -->
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.FatigueRating"><strong>Fatigue</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.FatigueRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Stress Rating -->
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.StressRating"><strong>Stress Level</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.StressRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Energy Rating -->
+            <div class="form-group mb-2">
+                <label for="PatientSurvey.EnergyRating"><strong>Energy Level</strong></label>
+                <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <label class="radio-inline custom-header mx-3 my-1">
+                            <input type="radio" class="form-check-input" asp-for="PatientSurvey.EnergyRating" value="@i" style="align-self: baseline;" />
+                            <div>@i</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+
+            <div class="form-group mb-3">
+                <label class="mb-2" for="PatientSurvey.AdditionalComments"><strong>Additional Comments</strong></label>
+                <textarea class="form-control w-50 mx-auto" asp-for="PatientSurvey.AdditionalComments"></textarea>
+            </div>
+
+            <div class="form-group mb-3">
+                <button type="submit" class="btn custom-btn-primary">Submit Survey</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,98 @@
+﻿@page
+@using HealthObserver.Models
+@model HealthObserver.Pages.Doctor.Diagrams.DisplayDiagramModel
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Display Diagram";
+}
+
+@{
+	var currentUser = await UserManager.GetUserAsync(User);
+}
+
+
+<div class="bg-light p-4">
+    <h1 class="display-5 custom-header mb-4">Survey Diagram</h1>
+    <div>
+        <p><b>Survey ID: </b>@Model.Survey.PatientSurveyId</p>
+        <p><b>Patient: </b>@Model.user.FirstName @Model.user.LastName</p>
+        <p><b>Response Date: </b>@Model.Survey.ResponseDate.ToString("yyyy-MM-dd")</p>
+        <div class="d-flex justify-content-between mb-4">
+            <button class="btn custom-btn-primary" onclick="displayRating('GeneralWellBeingRating')">General Well Being</button>
+            <button class="btn custom-btn-primary" onclick="displayRating('HeadacheRating')">Headache</button>
+            <button class="btn custom-btn-primary" onclick="displayRating('AbdominalPainRating')">Abdominal Pain</button>
+            <button class="btn custom-btn-primary" onclick="displayRating('NauseaRating')">NauseaRating</button>
+            <button class="btn custom-btn-primary" onclick="displayRating('FatigueRating')">FatigueRating</button>
+            <button class="btn custom-btn-primary" onclick="displayRating('StressRating')">StressRating</button>
+            <button class="btn custom-btn-primary" onclick="displayRating('EnergyRating')">EnergyRating</button>
+        </div>
+        <div class="align-items-center p-5">
+            <canvas id="myChart" width="500" height="300"></canvas>
+        </div>
+
+
+
+        <script>
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart;
+
+            function displayRating(rating) {
+                if (myChart) myChart.destroy();
+
+
+
+                var data;
+                switch (rating) {
+                    case 'GeneralWellBeingRating':
+                        data = @Html.Raw(Json.Serialize(Model.GeneralWellBeingRatingData));
+                        break;
+                    case 'HeadacheRating':
+                        data = @Html.Raw(Json.Serialize(Model.HeadacheRatingData));
+                        break;
+                    case 'AbdominalPainRating':
+                        data = @Html.Raw(Json.Serialize(Model.AbdominalPainData));
+                        break;
+                    case 'NauseaRating':
+                        data = @Html.Raw(Json.Serialize(Model.NauseaRatingData));
+                        break;
+                    case 'FatigueRating':
+                        data = @Html.Raw(Json.Serialize(Model.FatigueRatingData));
+                        break;
+                    case 'StressRating':
+                        data = @Html.Raw(Json.Serialize(Model.StressRatingData));
+                        break;
+                    case 'EnergyRating':
+                        data = @Html.Raw(Json.Serialize(Model.EnergyRatingData));
+                        break;
+
+                }
+
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @Html.Raw(Json.Serialize(Model.ChartLabels)),
+                        datasets: [{
+                            label: rating,
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+
+            }
+        </script>
+    </div>
+</div>
