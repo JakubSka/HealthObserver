@@ -166,3 +166,11 @@ input[type="radio"]:checked {
 .show > .custom-btn-success.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #4BC0C0;
+    /*    --bs-dropdown-border-color: none;
+*/ --bs-dropdown-link-hover-bg: #4BC0C0;
+    --bs-dropdown-link-hover-color: white;
+    padding: 0;
+}
