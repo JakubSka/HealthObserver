@@ -49,6 +49,15 @@
 						<td class="text-center">@survey.StressRating</td>
 						<td class="text-center">@survey.EnergyRating</td>
 						<td class="text-center">@survey.AdditionalComments</td>
+						<td class="text-center">
+							<form method="post" asp-page-handler="Download" asp-route-surveyId="@survey.PatientSurveyId">
+								<button type="submit" class="btn btn-primary">Download</button>
+							</form>
+							<form method="get" asp-page-handler="Preview" asp-route-surveyId="@survey.PatientSurveyId">
+								<button type="submit" class="btn btn-secondary">Preview</button>
+							</form>
+							<a href="/Doctor/Survey/Display?surveyId=@survey.PatientSurveyId&handler=Preview">Preview</a>
+						</td>
 					</tr>
 				}
 			</tbody>

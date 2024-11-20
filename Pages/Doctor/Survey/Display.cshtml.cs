@@ -1,3 +1,4 @@
+using HealthObserver.BlobStorage;
 using HealthObserver.Data;
 using HealthObserver.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,11 @@ namespace HealthObserver.Pages.Doctor.Survey
     public class DisplayModel : PageModel
     {
         private readonly ApplicationDbContext _dbContext;
-
-        public DisplayModel(ApplicationDbContext dbContext)
+        private readonly BlobStorageService _blobService;
+        public DisplayModel(ApplicationDbContext dbContext, BlobStorageService blobService)
         {
             _dbContext = dbContext;
+            _blobService = blobService;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -58,6 +60,38 @@ namespace HealthObserver.Pages.Doctor.Survey
             PatientSurveys = await surveysQuery.ToListAsync();
 
             return Page();
+        }
+        public async Task<IActionResult> OnPostDownloadAsync(int surveyId)
+        {
+            var survey = await _dbContext.PatientSurveys.FindAsync(surveyId);
+            if (survey == null || string.IsNullOrEmpty(survey.FileName))
+            {
+                return NotFound();
+            }
+
+            var fileStream = await _blobService.GetFileAsync(survey.FileName);
+            if (fileStream == null)
+            {
+                return NotFound();
+            }
+
+            return File(fileStream, "application/pdf", survey.FileName);
+        }
+        public IActionResult OnGetPreview(int surveyId)
+        {
+            var survey = _dbContext.PatientSurveys.FirstOrDefault(s => s.PatientSurveyId == surveyId);
+            if (survey == null || string.IsNullOrEmpty(survey.FileName))
+            {
+                return NotFound();
+            }
+
+            var fileUrl = _blobService.GetFileUrl(survey.FileName);
+            if (string.IsNullOrEmpty(fileUrl))
+            {
+                return NotFound();
+            }
+
+            return Redirect(fileUrl); 
         }
     }
 }

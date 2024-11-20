@@ -33,5 +33,6 @@ namespace HealthObserver.Models
 		[Range(1, 10, ErrorMessage = "The rating must be between 1 and 10.")]
 		public int EnergyRating { get; set; } // Ocena poziomu energii
 		public string? AdditionalComments { get; set; }
-	}
+        public string FileName { get; set; }
+    }
 }
