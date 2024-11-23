@@ -35,44 +35,46 @@
 	<a asp-page="./Add" asp-route-UserId="@Model.UserId" asp-route-MedicationHistorySortOrder="oldest">Oldest</a> |
 	<a asp-page="./Add" asp-route-UserId="@Model.UserId" asp-route-MedicationHistorySortOrder="newest">Newest</a>
 </div>
-<table class="table">
-	<thead>
-	<tr>
-		<th>Date Taken</th>
-		<th>Medicine</th>
-		<th>Amount Taken</th>
-		<th>Start Prescriptions</th>
-		<th>End Prescriptions</th>
-	</tr>
-	</thead>
-	<tbody>
-	@foreach (var history in Model.MedicationHistory)
-	{
-		<tr>
-			<td>@history.TakenDateTime</td>
-			<td>@history.Prescription.Medicine.Name - @history.Prescription.Dose @history.Prescription.DoseUnit</td>
-			<td>
-				@if (history.AmountTaken == 0)
-				{
-					<span style="color: red;">@history.AmountTaken</span>
-				}
-				else if (history.AmountTaken != history.Prescription.Dose)
-				{
-					<span style="color: darkorange;">@history.AmountTaken</span>
-				}
-				else
-				{
-					<span style="color: green;">@history.AmountTaken</span>
-				}
-			</td>
-			<td>@history.Prescription.StartPrescription</td>
-			<td>@history.Prescription.EndPrescription</td>
-			
-		</tr>
-	}
-	</tbody>
-</table>
+<div class="table-container">
 
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Date Taken</th>
+			<th>Medicine</th>
+			<th>Amount Taken</th>
+			<th>Start Prescriptions</th>
+			<th>End Prescriptions</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach (var history in Model.MedicationHistory)
+		{
+			<tr>
+				<td>@history.TakenDateTime</td>
+				<td>@history.Prescription.Medicine.Name - @history.Prescription.Dose @history.Prescription.DoseUnit</td>
+				<td>
+					@if (history.AmountTaken == 0)
+					{
+						<span style="color: red;">@history.AmountTaken</span>
+					}
+					else if (history.AmountTaken != history.Prescription.Dose)
+					{
+						<span style="color: darkorange;">@history.AmountTaken</span>
+					}
+					else
+					{
+						<span style="color: green;">@history.AmountTaken</span>
+					}
+				</td>
+				<td>@history.Prescription.StartPrescription</td>
+				<td>@history.Prescription.EndPrescription</td>
+			
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>
 <div class="modal fade" id="editModal">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
@@ -105,8 +107,6 @@
 
 <script>
 	function openEditModal(PrescriptionId) {
-		//var form = document.getElementById('editForm');
-		//form.action = '/Doctor/Prescription/Add?handler=Edit&Id=' + PrescriptionId;
 		$('#editModal').modal('show');
 	}
 </script>			

@@ -28,22 +28,37 @@
 	var currentUser = await UserManager.GetUserAsync(User);
 }
 <div class="bg-light p-4 ">
-	<div class="d-flex justify-content-between align-items-center mb-4">
-		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-			<li class="nav-item" role="presentation">
-				<a class="nav-link active" id="pills-prescriptions-tab" data-bs-toggle="pill" href="#pills-prescriptions" role="tab" aria-controls="pills-prescriptions" aria-selected="true">My Prescriptions</a>
-			</li>
-			<li class="nav-item" role="presentation">
-				<a class="nav-link" id="pills-medication-tab" data-bs-toggle="pill" href="#pills-medication" role="tab" aria-controls="pills-medication" aria-selected="false">Medication Tracking</a>
-			</li>
-		</ul>
-		<div>
-			<a href="@Url.Page("/Doctor/Prescription/HistoryPrescription", new { userId = @currentUser.Id })" class="btn custom-btn-primary">Prescription History</a>
-		</div>
-	</div>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-2">
+        <div class="mb-2 mt-2">
+            <a href="@Url.Page("/Doctor/Prescription/HistoryPrescription", new { userId = @currentUser.Id })" class="btn custom-btn-primary">Prescription History</a>
+        </div>
+        <ul class="nav nav-pills mb-3 mb-md-0" id="pills-tab" role="tablist">
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="pills-prescriptions-tab" data-bs-toggle="pill" href="#pills-prescriptions" role="tab" aria-controls="pills-prescriptions" aria-selected="true">My Prescriptions</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-medication-tab" data-bs-toggle="pill" href="#pills-medication" role="tab" aria-controls="pills-medication" aria-selected="false">
+                    Medication Tracking
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-prescriptions" role="tabpanel" aria-labelledby="pills-prescriptions-tab">
-            <div class="table-container">
+            @if (!Model.Prescriptions.Any())
+            {
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        You have no prescriptions.
+                    </div>
+                </div>
+            }
+            else
+            {
+            <div class="table-container d-none d-lg-block">
                 <table class="table table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -52,20 +67,14 @@
                             <th scope="col" class="text-center">Dose</th>
                             <th scope="col" class="text-center">Dose Unit</th>
                             <th scope="col" class="text-center">Frequency</th>
-                            <th scope="col" class="text-center">StartPrescription</th>
-                            <th scope="col" class="text-center">EndPrescription</th>
+                            <th scope="col" class="text-center">Start Prescription</th>
+                            <th scope="col" class="text-center">End Prescription</th>
                             <th scope="col" class="text-center">Option</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!Model.Prescriptions.Any())
-                        {
-                            <tr>
-                                <td colspan="8" class="text-center">No prescriptions found.</td>
-                            </tr>
-                        }
-                        else
-                        {
+                        
+                        
                             @foreach (var prescription in Model.Prescriptions)
                             {
                                 <tr>
@@ -85,30 +94,66 @@
                     </tbody>
                 </table>
             </div>
+
+            }
+
+            <div class="card-container d-lg-none">
+                @if (!Model.Prescriptions.Any())
+                {
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                            You have no prescriptions.
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var prescription in Model.Prescriptions)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">@prescription.Medicine.Name</h5>
+                                <p class="card-text">@prescription.Medicine.Description</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>Dose:</strong> @prescription.Dose</li>
+                                    <li class="list-group-item"><strong>Dose Unit:</strong> @prescription.DoseUnit</li>
+                                    <li class="list-group-item"><strong>Frequency:</strong> @prescription.FrequencyInHours</li>
+                                    <li class="list-group-item"><strong>Start:</strong> @prescription.StartPrescription.ToString("yyyy-MM-dd")</li>
+                                    <li class="list-group-item"><strong>End:</strong> @prescription.EndPrescription.ToString("yyyy-MM-dd")</li>
+                                </ul>
+                                <button class="btn custom-btn-primary mt-3" onclick="openCreateModal(this)" data-prescription-id="@prescription.PrescriptionId">Add Amount Taken</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
         </div>
+
         <div class="tab-pane fade" id="pills-medication" role="tabpanel" aria-labelledby="pills-medication-tab">
-            <div class="table-container">
+            @if (!Model.MedicationHistory.Any())
+            {
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        You have no Medication History.
+                    </div>
+                </div>
+            }
+            else
+            {
+            <div class="table-container d-none d-lg-block">
                 <table class="table table-hover">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" class="text-center">Date Taken</th>
-                            <th scope="col" class="text-center">StartPrescription</th>
-                            <th scope="col" class="text-center">EndPrescription</th>
+                            <th scope="col" class="text-center">Start Prescription</th>
+                            <th scope="col" class="text-center">End Prescription</th>
                             <th scope="col" class="text-center">Medicine</th>
                             <th scope="col" class="text-center">Amount Taken</th>
                             <th scope="col" class="text-center">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!Model.MedicationHistory.Any())
-                        {
-                            <tr>
-                                <td colspan="6" class="text-center">No medication tracking history found.</td>
-                            </tr>
-                        }
-                        else
-                        {
-                            @foreach (var history in Model.MedicationHistory)
+                        @foreach (var history in Model.MedicationHistory)
                             {
                                 <tr>
                                     <td class="text-center">@history.TakenDateTime.Date.ToString("yyyy-MM-dd")</td>
@@ -118,28 +163,60 @@
                                     <td class="text-center">
                                         @if (history.AmountTaken == 0)
                                         {
-                                            <span style="color: red;">@history.AmountTaken</span>
+                                            <span class="text-danger">@history.AmountTaken</span>
                                         }
                                         else if (history.AmountTaken != history.Prescription.Dose)
                                         {
-                                            <span style="color: darkorange;">@history.AmountTaken</span>
+                                            <span class="text-warning">@history.AmountTaken</span>
                                         }
                                         else
                                         {
-                                            <span style="color: green;">@history.AmountTaken</span>
+                                            <span class="text-success">@history.AmountTaken</span>
                                         }
                                     </td>
                                     <td class="text-center">
-                                        <button amount_taken="@history.AmountTaken" class="btn custom-btn-primary" onclick="openEditModal('@history.MedicationHistoryId')">Edit Amount Taken</button>
+                                        <button class="btn custom-btn-primary" onclick="openEditModal('@history.MedicationHistoryId')">Edit Amount Taken</button>
                                     </td>
                                 </tr>
-                            }
-                        }
+                            }  
+                        
+                            
+                        
                     </tbody>
                 </table>
             </div>
+            }
+            <div class="card-container d-lg-none">
+                @if (!Model.MedicationHistory.Any())
+                {
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                           You have no Medication History.
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var history in Model.MedicationHistory)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">@history.Prescription.Medicine.Name</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>Date Taken:</strong> @history.TakenDateTime.Date.ToString("yyyy-MM-dd")</li>
+                                    <li class="list-group-item"><strong>Start Prescription:</strong> @history.Prescription.StartPrescription.ToString("yyyy-MM-dd")</li>
+                                    <li class="list-group-item"><strong>End Prescription:</strong> @history.Prescription.EndPrescription.ToString("yyyy-MM-dd")</li>
+                                    <li class="list-group-item"><strong>Amount Taken:</strong> @history.AmountTaken</li>
+                                </ul>
+                                <button class="btn custom-btn-primary mt-3" onclick="openEditModal('@history.MedicationHistoryId')">Edit Amount Taken</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
         </div>
     </div>
+
 
 
 </div>
