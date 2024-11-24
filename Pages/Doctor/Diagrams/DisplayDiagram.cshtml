@@ -17,18 +17,26 @@
         <p><b>Survey ID: </b>@Model.Survey.PatientSurveyId</p>
         <p><b>Patient: </b>@Model.user.FirstName @Model.user.LastName</p>
         <p><b>Response Date: </b>@Model.Survey.ResponseDate.ToString("yyyy-MM-dd")</p>
-        <div class="d-flex justify-content-between mb-4">
-            <button class="btn custom-btn-primary" onclick="displayRating('GeneralWellBeingRating')">General Well Being</button>
-            <button class="btn custom-btn-primary" onclick="displayRating('HeadacheRating')">Headache</button>
-            <button class="btn custom-btn-primary" onclick="displayRating('AbdominalPainRating')">Abdominal Pain</button>
-            <button class="btn custom-btn-primary" onclick="displayRating('NauseaRating')">NauseaRating</button>
-            <button class="btn custom-btn-primary" onclick="displayRating('FatigueRating')">FatigueRating</button>
-            <button class="btn custom-btn-primary" onclick="displayRating('StressRating')">StressRating</button>
-            <button class="btn custom-btn-primary" onclick="displayRating('EnergyRating')">EnergyRating</button>
+        <div class="row justify-content-center align-items-center mb-4">
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('GeneralWellBeingRating')">General Well Being</button>
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('HeadacheRating')">Headache</button>
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('AbdominalPainRating')">Abdominal Pain</button>
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('NauseaRating')">Nausea Rating</button>
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('FatigueRating')">Fatigue Rating</button>
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('StressRating')">Stress Rating</button>
+            <button class="btn custom-btn-primary col-12 col-sm-5 col-md-4 col-lg-3 col-xl-2 mb-3 mx-1" onclick="displayRating('EnergyRating')">Energy Rating</button>
         </div>
-        <div class="align-items-center p-5">
-            <canvas id="myChart" width="500" height="300"></canvas>
+
+
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 col-xl-8">
+                    <canvas id="myChart" class="d-block mx-auto w-100" height="300"></canvas>
+                </div>
+            </div>
         </div>
+
 
 
 
