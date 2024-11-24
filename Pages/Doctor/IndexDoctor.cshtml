@@ -8,9 +8,9 @@
 }
 
 <div class="bg-light p-4 ">
-	<h1 class="display-4 custom-header mb-4">Welcome to the Doctor Dashboard</h1>
+    <h1 class="custom-header mb-3">Welcome to the Doctor Dashboard</h1>
 	<div class="d-flex justify-content-between align-items-center mb-4">
-		<h2 class="custom-font-light ">Patients</h2>
+        <h2 class="fw-light mt-2">Patients</h2>
 
 		<form class="form-inline d-flex align-items-center" method="get">
 			<div class="col-sm-9">
@@ -23,34 +23,70 @@
 	</div>
 
 
+    <div class="table-container d-none d-lg-block">
+        @if (!Model.UsersWithRolePatient.Any())
+        {
+            <div class="alert alert-info" role="alert">
+                No patients found.
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">First Name</th>
+                        <th scope="col" class="text-center">Last Name</th>
+                        <th scope="col" class="text-center">E-mail</th>
+                        <th scope="col" class="text-center">View Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.UsersWithRolePatient)
+                    {
+                        <tr>
+                            <th scope="row" class="text-center">@(++userCount)</th>
+                            <td class="text-center">@user.FirstName</td>
+                            <td class="text-center">@user.LastName</td>
+                            <td class="text-center">@user.Email</td>
+                            <td class="text-center">
+                                <a href="@Url.Page("/Doctor/PatientProfile/PatientProfile", new { userId = user.Id })" class="btn custom-btn-primary">
+                                    Patient Profile
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 
-	<table class="table table-hover">
-		<thead class="thead-light">
-			<tr>
-				<th scope="col" class="text-center">#</th>
-				<th scope="col" class="text-center">First Name</th>
-				<th scope="col" class="text-center">Last Name</th>
-				<th scope="col" class="text-center">E-mail</th>
-				<th scope="col" class="text-center">View Details</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var user in Model.UsersWithRolePatient)
-			{
-				<tr>
-					<th scope="row" class="text-center">@(++userCount)</th>
-					<td class="text-center">@user.FirstName</td>
-					<td class="text-center">@user.LastName</td>
-					<td class="text-center">@user.Email</td>
-					<td class="text-center">
-						<a href="@Url.Page("/Doctor/PatientProfile/PatientProfile", new { userId = user.Id })" class="btn custom-btn-primary">
-							Patient Profile
-						</a>
-					</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+    <div class="card-container d-lg-none">
+        @if (!Model.UsersWithRolePatient.Any())
+        {
+            <div class="alert alert-info" role="alert">
+                No patients found.
+            </div>
+        }
+        else
+        {
+            @foreach (var user in Model.UsersWithRolePatient)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@user.FirstName @user.LastName</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>E-mail:</strong> @user.Email</li>
+                        </ul>
+                        <a href="@Url.Page("/Doctor/PatientProfile/PatientProfile", new { userId = user.Id })" class="btn custom-btn-primary mt-3">
+                            Patient Profile
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
 </div>
-
 

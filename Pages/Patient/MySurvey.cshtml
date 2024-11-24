@@ -29,7 +29,7 @@
 
 
         <form method="post">
-            <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center d-flex flex-column flex-md-row">
                 <div class="form-group mb-3 d-flex align-items-center mr-3">
                     <label class="mx-2" for="PatientSurvey.ResponseDate" style="white-space: nowrap;">Survey Date:</label>
                     <input type="date" class="form-control mx-2" asp-for="PatientSurvey.ResponseDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
@@ -55,19 +55,8 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
-                            <!--
-                                <div>
-                            @if (i == 1)
-                            {
-                                            <span>Low</span>
-                            }
-                            else if (i == 10)
-                            {
-                                            <span>High</span>
-                            }
-                            </div>
-                            -->
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
+                           
 
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.GeneralWellBeingRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
@@ -82,7 +71,7 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.HeadacheRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
                         </label>
@@ -96,7 +85,7 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.AbdominalPainRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
                         </label>
@@ -110,7 +99,7 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.NauseaRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
                         </label>
@@ -124,7 +113,7 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.FatigueRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
                         </label>
@@ -138,7 +127,7 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.StressRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
                         </label>
@@ -152,7 +141,7 @@
                 <div class="mt-1 d-flex flex-wrap justify-content-center align-items-center">
                     @for (int i = 1; i <= 10; i++)
                     {
-                        <label class="radio-inline custom-header mx-3 my-1">
+                        <label class="radio-inline custom-header mx-md-3 mx-lg-3 mx-sm-3 mx-2 my-1">
                             <input type="radio" class="form-check-input" asp-for="PatientSurvey.EnergyRating" value="@i" style="align-self: baseline;" />
                             <div>@i</div>
                         </label>
@@ -161,9 +150,9 @@
             </div>
 
 
-            <div class="form-group mb-3">
+            <div class="form-group mb-3 col-lg-5 col-10 col-sm-10 col-md-8 mx-auto">
                 <label class="mb-2" for="PatientSurvey.AdditionalComments"><strong>Additional Comments</strong></label>
-                <textarea class="form-control w-50 mx-auto" asp-for="PatientSurvey.AdditionalComments"></textarea>
+                <textarea class="form-control mx-auto" asp-for="PatientSurvey.AdditionalComments"></textarea>
             </div>
 
             <div class="form-group mb-3">

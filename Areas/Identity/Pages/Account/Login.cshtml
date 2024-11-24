@@ -10,7 +10,7 @@
         <h1 class="custom-font-light">@ViewData["Title"]</h1>
     </div>
     <div class="row justify-content-center  mt-3">
-        <div class="col-md-4">
+        <div class="col-md-8 col-sm-8 col-10 col-lg-5 col-xl-4">
             <section>
                 <form id="account" method="post">
                     <div class="container text-center">
@@ -37,20 +37,6 @@
                     <div>
                         <button id="login-submit" type="submit" class="w-100 btn btn-lg custom-btn-primary">Log in</button>
                     </div>
-                    <!--
-                    <div>
-                        <p>
-                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                        </p>
-                        <p>
-                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                        </p>
-
-                        <p>
-                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                        </p>
-                    </div>
-                    -->
                 </form>
             </section>
         </div>

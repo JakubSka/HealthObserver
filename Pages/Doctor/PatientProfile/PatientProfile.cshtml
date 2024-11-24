@@ -83,11 +83,6 @@
 	</div>
 
 	<div class="row mb-5">
-		<!--
-			<div class="col-2">
-			<a href="@Url.Page("/Doctor/Prescription/Add", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary">Add Prescription</a>
-		</div>
-		-->
 
 		<div class="col-2">
 			<a href="@Url.Page("/Doctor/Survey/Display", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary">See Surveys</a>
@@ -113,41 +108,41 @@
 		@Model.ErrorMessage
 	</div>
 }
-
-	<table class="table table-hover">
-		<thead class="thead-light">
-			<tr>
-				<th scope="col" class="text-center">Medicine</th>
-				<th scope="col" class="text-center">Description</th>
-				<th scope="col" class="text-center">Dose</th>
-				<th scope="col" class="text-center">Dose Unit</th>
-				<th scope="col" class="text-center">Frequency</th>
-				<th scope="col" class="text-center">StartPrescription</th>
-				<th scope="col" class="text-center">EndPrescription</th>
-				<th scope="col" class="text-center">Edit</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var prescription in Model.Prescriptions)
-			{
+	<div class="table-container">
+		<table class="table table-hover">
+			<thead class="thead-light">
 				<tr>
-					<td class="text-center">@prescription.Medicine.Name</td>
-					<td class="text-center">@prescription.Medicine.Description</td>
-					<td class="text-center">@prescription.Dose</td>
-					<td class="text-center">@prescription.DoseUnit</td>
-					<td class="text-center">@prescription.FrequencyInHours</td>
-					<td class="text-center">@prescription.StartPrescription.Date.ToShortDateString()</td>
-					<td class="text-center">@prescription.EndPrescription.Date.ToShortDateString()</td>
-					<td class="text-center">
-						<button type="button" class="btn custom-btn-primary" onclick="openEditModal(@prescription.PrescriptionId)">
-							Edit
-						</button>
-					</td>
+					<th scope="col" class="text-center">Medicine</th>
+					<th scope="col" class="text-center">Description</th>
+					<th scope="col" class="text-center">Dose</th>
+					<th scope="col" class="text-center">Dose Unit</th>
+					<th scope="col" class="text-center">Frequency</th>
+					<th scope="col" class="text-center">StartPrescription</th>
+					<th scope="col" class="text-center">EndPrescription</th>
+					<th scope="col" class="text-center">Edit</th>
 				</tr>
-			}
-		</tbody>
-	</table>
-
+			</thead>
+			<tbody>
+				@foreach (var prescription in Model.Prescriptions)
+				{
+					<tr>
+						<td class="text-center">@prescription.Medicine.Name</td>
+						<td class="text-center">@prescription.Medicine.Description</td>
+						<td class="text-center">@prescription.Dose</td>
+						<td class="text-center">@prescription.DoseUnit</td>
+						<td class="text-center">@prescription.FrequencyInHours</td>
+						<td class="text-center">@prescription.StartPrescription.Date.ToShortDateString()</td>
+						<td class="text-center">@prescription.EndPrescription.Date.ToShortDateString()</td>
+						<td class="text-center">
+							<button type="button" class="btn custom-btn-primary" onclick="openEditModal(@prescription.PrescriptionId)">
+								Edit
+							</button>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>		
 		
 <div class="modal fade" id="createModal" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
