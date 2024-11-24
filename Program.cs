@@ -1,3 +1,4 @@
+using HealthObserver.BlobStorage;
 using HealthObserver.Data;
 using HealthObserver.Models;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<BlobStorageService>();
 
 var app = builder.Build();
 
