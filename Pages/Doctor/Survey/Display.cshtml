@@ -6,69 +6,77 @@
 
 
 <div class="bg-light p-4">
-	<div class="d-flex justify-content-between align-items-center mb-4">
-		<h2 class="display-5 custom-header mb-4">Survey for Patient : @Model.user.FirstName @Model.user.LastName</h2>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+        <h2 class="custom-header mb-3">Survey for Patient: @Model.user.FirstName @Model.user.LastName</h2>
 
-		<div>
-			<a class="btn custom-btn-success" asp-page="./Display" asp-route-UserId="@Model.UserId" asp-route-SortOrder="oldest">Sort from oldest</a>
-			<a class="btn custom-btn-success" asp-page="./Display" asp-route-UserId="@Model.UserId" asp-route-SortOrder="newest">Sort from newest</a>
-		</div>
-	</div>
+        <div class="d-flex flex-md-row mt-3 mt-md-0">
+            <a class="btn custom-btn-success mb-2 mb-md-0 mr-md-2" asp-page="./Display" asp-route-UserId="@Model.UserId" asp-route-SortOrder="oldest">Sort from oldest</a>
+            <a class="btn custom-btn-success mb-2 mb-md-0" asp-page="./Display" asp-route-UserId="@Model.UserId" asp-route-SortOrder="newest">Sort from newest</a>
+        </div>
+    </div>
 
 
-	@if (Model.PatientSurveys != null && Model.PatientSurveys.Any())
-	{
-		<table class="table table-hover">
-			<thead class="thead-light">
-				<tr>
-					<th class="text-center">ID</th>
-					<th class="text-center">Hour</th>
-					<th class="text-center">Date</th>
-					<th class="text-center">General Well-Being</th>
-					<th class="text-center">Headache</th>
-					<th class="text-center">Abdominal Pain</th>
-					<th class="text-center">Nausea</th>
-					<th class="text-center">Fatigue</th>
-					<th class="text-center">Stress</th>
-					<th class="text-center">Energy</th>
-					<th class="text-center">Additional Comments</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var survey in Model.PatientSurveys)
-				{
-					<tr>
-						<td class="text-center">@survey.PatientSurveyId</td>
-						<td class="text-center">@survey.SurveyHour</td>
-						<td class="text-center">@survey.ResponseDate.Date.ToShortDateString()</td>
-						<td class="text-center">@survey.GeneralWellBeingRating</td>
-						<td class="text-center">@survey.HeadacheRating</td>
-						<td class="text-center">@survey.AbdominalPainRating</td>
-						<td class="text-center">@survey.NauseaRating</td>
-						<td class="text-center">@survey.FatigueRating</td>
-						<td class="text-center">@survey.StressRating</td>
-						<td class="text-center">@survey.EnergyRating</td>
-						<td class="text-center">@survey.AdditionalComments</td>
-						<td class="text-center">
-							<form method="post" asp-page-handler="Download" asp-route-surveyId="@survey.PatientSurveyId">
-								<button type="submit" class="btn btn-primary">Download</button>
-							</form>
-							<form method="get" asp-page-handler="Preview" asp-route-surveyId="@survey.PatientSurveyId">
-								<button type="submit" class="btn btn-secondary">Preview</button>
-							</form>
-							<a href="/Doctor/Survey/Display?surveyId=@survey.PatientSurveyId&handler=Preview">Preview</a>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	}
-	else
-	{
-		<p>No survey data available for this user.</p>
-	}
 
-	<div>
-		<canvas id="surveyChart" width="800" height="400"></canvas>
-	</div>
+
+    <div class="table-container d-none d-md-block">
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Hour</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var survey in Model.PatientSurveys)
+                {
+                    <tr>
+                        <td class="text-center">@survey.PatientSurveyId</td>
+                        <td class="text-center">@survey.SurveyHour</td>
+                        <td class="text-center">@survey.ResponseDate.Date.ToShortDateString()</td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group" aria-label="Survey Actions">
+                                <form method="post" asp-page-handler="Download" asp-route-surveyId="@survey.PatientSurveyId">
+                                    <button type="submit" class="btn custom-btn-primary btn-sm mx-3">Download</button>
+                                </form>
+                                @* <form method="get" asp-page-handler="Preview" asp-route-surveyId="@survey.PatientSurveyId">
+                                    <button type="submit" class="btn btn-secondary btn-sm">Preview</button>
+                                </form> *@
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-container d-block d-md-none">
+        @foreach (var survey in Model.PatientSurveys)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Survey ID: @survey.PatientSurveyId</h5>
+                    <p class="card-text"><strong>Hour:</strong> @survey.SurveyHour</p>
+                    <p class="card-text"><strong>Date:</strong> @survey.ResponseDate.Date.ToShortDateString()</p>
+
+                    <div class="btn-group w-100" role="group" aria-label="Survey Actions">
+                        <form method="post" asp-page-handler="Download" asp-route-surveyId="@survey.PatientSurveyId">
+                            <button type="submit" class="btn custom-btn-primary btn-sm">Download</button>
+                        </form>
+                        <form method="get" asp-page-handler="Preview" asp-route-surveyId="@survey.PatientSurveyId">
+                            <button type="submit" class="btn btn-secondary btn-sm  mx-3">Preview</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+    <div>
+        <canvas id="surveyChart" width="800" height="400"></canvas>
+    </div>
+
 </div>

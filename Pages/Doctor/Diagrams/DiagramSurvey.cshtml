@@ -19,30 +19,57 @@
 			<a class="btn custom-btn-success" asp-page="./DiagramSurvey" asp-route-UserId="@Model.UserId" asp-route-DiagramSortOrder="newest">Newest</a>
 		</div>
 	</div>
-	<div class="table-container">
+    @if (Model.Surveys == null || !Model.Surveys.Any())
+    {
+            <!-- Alert if no surveys are found -->
+            <div class="alert alert-warning text-center" role="alert">
+                No surveys found.
+            </div>
+    }
+    else
+    {
+        <div class="table-container d-none d-lg-block">
 
-		<table class="table table-hover">
-			<thead class="thead-light">
-				<tr>
-					<th class="text-center">ID</th>
-					<th class="text-center">Patient</th>
-					<th class="text-center">Response Date</th>
-					<th class="text-center">Diagram</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var survey in Model.Surveys)
-				{
-					<tr>
-						<td class="text-center">@survey.PatientSurveyId</td>
-						<td class="text-center">@Model.user.FirstName @Model.user.LastName</td>
-						<td class="text-center">@survey.ResponseDate.ToString("yyyy-MM-dd")</td>
-						<td class="text-center">
-							<a href="@Url.Page("/Doctor/Diagrams/DisplayDiagram", new { surveyId = survey.PatientSurveyId, userId = @Model.user.Id })" class="btn custom-btn-primary">Display Diagram</a>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Patient</th>
+                            <th class="text-center">Response Date</th>
+                            <th class="text-center">Diagram</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var survey in Model.Surveys)
+                        {
+                            <tr>
+                                <td class="text-center">@survey.PatientSurveyId</td>
+                                <td class="text-center">@Model.user.FirstName @Model.user.LastName</td>
+                                <td class="text-center">@survey.ResponseDate.ToString("yyyy-MM-dd")</td>
+                                <td class="text-center">
+                                    <a href="@Url.Page("/Doctor/Diagrams/DisplayDiagram", new { surveyId = survey.PatientSurveyId, userId = @Model.user.Id })" class="btn custom-btn-primary">Display Diagram</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+        </div>
+
+
+        <div class="card-container d-lg-none">
+            @foreach (var survey in Model.Surveys)
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Survey ID: @survey.PatientSurveyId</h5>
+                        <p class="card-text"><strong>Patient:</strong> @Model.user.FirstName @Model.user.LastName</p>
+                        <p class="card-text"><strong>Response Date:</strong> @survey.ResponseDate.ToString("yyyy-MM-dd")</p>
+                        <a href="@Url.Page("/Doctor/Diagrams/DisplayDiagram", new { surveyId = survey.PatientSurveyId, userId = @Model.user.Id })" class="btn custom-btn-primary">Display Diagram</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+
 </div>

@@ -49,100 +49,145 @@
 	<h1 class="display-5 custom-header mb-4">Patient Profile</h1>
 
 
-	<div class="container title-margin bg-secondary mb-4">
-		<h3>Personal Information</h3>
-		<hr style="color: #43ABAB; background-color: #43ABAB; height: 4px; border: none;" />
-		<div class="col-md-8 mb-3">
+	<div class="card mb-4" style="border: 3px solid #4BC0C0; border-radius: 15px; padding: 15px;">
+		<div class="card-body">
+			<div class="row align-items-center">
+				<div class="col-md-1 text-center">
+					<svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" fill="#4BC0C0" class="bi bi-person-fill" viewBox="0 0 16 16">
+						<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+					</svg>
 
-			<div class="row mb-1 mt-3">
-				<div class="col-md-2"><b>First Name: </b></div>
-				<div class="col-md-8">@Model.user.FirstName</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2"><b>Last Name: </b> </div>
-				<div class="col-md-8">@Model.user.LastName</div>
-			</div>
-
-		</div>
-
-		<div class="col-md-8">
-			<div class="row mb-1">
-				<div class="col-md-2"><b>Pesel: </b>  </div>
-				<div class="col-md-4">@Model.user.Pesel</div>
-
-				<div class="col-md-3"><b>Birth Date: </b> </div>
-				<div class="col-md-3">@Model.user.BirthDate.Date.ToShortDateString()</div>
-			</div>
-			<div class="row mb-2">
-				<div class="col-md-2"><b>Email: </b> </div>
-				<div class="col-md-4">@Model.user.Email</div>
-				<div class="col-md-3"><b>Phone Number: </b> </div>
-				<div class="col-md-3">@Model.user.PhoneNumber</div>
+				</div>
+				<div class="col-md-10 mx-3">
+					<h3 class="mb-3" style="color: #4BC0C0;">Personal Information</h3>
+					<hr style="color: #4BC0C0; background-color: #4BC0C0; height: 2px; border: none;" />
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<b>First Name:</b> <span>@Model.user.FirstName</span>
+							</div>
+							<div class="col-md-6 mb-3">
+								<b>Last Name:</b> <span>@Model.user.LastName</span>
+							</div>
+							<div class="col-md-6 mb-3">
+								<b>Pesel:</b> <span>@Model.user.Pesel</span>
+							</div>
+							<div class="col-md-6 mb-3">
+								<b>Birth Date:</b> <span>@Model.user.BirthDate.Date.ToShortDateString()</span>
+							</div>
+							<div class="col-md-6 mb-3">
+								<b>Email:</b> <span>@Model.user.Email</span>
+							</div>
+							<div class="col-md-6 mb-3">
+								<b>Phone Number:</b> <span>@Model.user.PhoneNumber</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="row mb-5">
 
-		<div class="col-2">
+
+
+	<div class="row text-center mb-5">
+		<div class="d-flex justify-content-center align-items-center col-lg-3 col-md-3 col-sm-6 col-12 mb-3">
 			<a href="@Url.Page("/Doctor/Survey/Display", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary">See Surveys</a>
 		</div>
-		<div class="col-2">
-			<a href="@Url.Page("/Doctor/Diagrams/DiagramSurvey", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary">See Diagrams</a>
+
+		<div class="d-flex justify-content-center align-items-center col-lg-3 col-md-3 col-sm-6 col-12 mb-3">
+			<a href="@Url.Page("/Doctor/Diagrams/DiagramSurvey", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary w-100">See Diagrams</a>
 		</div>
-		<div class="col-2">
-			<a href="@Url.Page("/Doctor/Prescription/HistoryPrescription", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary">Prescription History</a>
+		<div class="d-flex justify-content-center align-items-center col-lg-3 col-md-3 col-sm-6 col-12 mb-3">
+			<a href="@Url.Page("/Doctor/Prescription/HistoryPrescription", new { userId = @Model.user.Id })" class="btn btn-custom custom-btn-primary w-100">Prescription History</a>
 		</div>
-		<div class="col-2">
-			<button type="button" class="btn btn-custom custom-btn-primary" onclick="openCreateModal()">New Prescription</button>
+		<div class="d-flex justify-content-center align-items-center col-lg-3 col-md-3 col-sm-6 col-12 mb-3">
+			<button type="button" class="btn btn-custom custom-btn-primary w-100" onclick="openCreateModal()">New Prescription</button>
 		</div>
 	</div>
+
 
 	<hr style="color: #43ABAB; background-color: #43ABAB; height: 2px; border: none;" />
 
 	<h2 class="custom-header mb-4 mt-3">Prescriptions</h2>
 
-	@if (!string.IsNullOrEmpty(Model.ErrorMessage))
-{
-	<div class="alert alert-danger">
-		@Model.ErrorMessage
-	</div>
-}
-	<div class="table-container">
-		<table class="table table-hover">
-			<thead class="thead-light">
-				<tr>
-					<th scope="col" class="text-center">Medicine</th>
-					<th scope="col" class="text-center">Description</th>
-					<th scope="col" class="text-center">Dose</th>
-					<th scope="col" class="text-center">Dose Unit</th>
-					<th scope="col" class="text-center">Frequency</th>
-					<th scope="col" class="text-center">StartPrescription</th>
-					<th scope="col" class="text-center">EndPrescription</th>
-					<th scope="col" class="text-center">Edit</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var prescription in Model.Prescriptions)
-				{
+	<div class="table-container d-none d-lg-block">
+		@if (!Model.Prescriptions.Any())
+		{
+			<div class="alert alert-info" role="alert">
+				No prescriptions found.
+			</div>
+		}
+		else
+		{
+			<table class="table table-hover">
+				<thead class="thead-light">
 					<tr>
-						<td class="text-center">@prescription.Medicine.Name</td>
-						<td class="text-center">@prescription.Medicine.Description</td>
-						<td class="text-center">@prescription.Dose</td>
-						<td class="text-center">@prescription.DoseUnit</td>
-						<td class="text-center">@prescription.FrequencyInHours</td>
-						<td class="text-center">@prescription.StartPrescription.Date.ToShortDateString()</td>
-						<td class="text-center">@prescription.EndPrescription.Date.ToShortDateString()</td>
-						<td class="text-center">
-							<button type="button" class="btn custom-btn-primary" onclick="openEditModal(@prescription.PrescriptionId)">
-								Edit
-							</button>
-						</td>
+						<th scope="col" class="text-center">Medicine</th>
+						<th scope="col" class="text-center">Description</th>
+						<th scope="col" class="text-center">Dose</th>
+						<th scope="col" class="text-center">Dose Unit</th>
+						<th scope="col" class="text-center">Frequency</th>
+						<th scope="col" class="text-center">Start Prescription</th>
+						<th scope="col" class="text-center">End Prescription</th>
+						<th scope="col" class="text-center">Edit</th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach (var prescription in Model.Prescriptions)
+					{
+						<tr>
+							<td class="text-center">@prescription.Medicine.Name</td>
+							<td class="text-center">@prescription.Medicine.Description</td>
+							<td class="text-center">@prescription.Dose</td>
+							<td class="text-center">@prescription.DoseUnit</td>
+							<td class="text-center">@prescription.FrequencyInHours</td>
+							<td class="text-center">@prescription.StartPrescription.Date.ToShortDateString()</td>
+							<td class="text-center">@prescription.EndPrescription.Date.ToShortDateString()</td>
+							<td class="text-center">
+								<button type="button" class="btn custom-btn-primary" onclick="openEditModal(@prescription.PrescriptionId)">
+									Edit
+								</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
 	</div>
+
+	<div class="card-container d-lg-none">
+		@if (!Model.Prescriptions.Any())
+		{
+			<div class="alert alert-info" role="alert">
+				No prescriptions found.
+			</div>
+		}
+		else
+		{
+			@foreach (var prescription in Model.Prescriptions)
+			{
+				<div class="card mb-3">
+					<div class="card-body">
+						<h5 class="card-title">@prescription.Medicine.Name</h5>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><strong>Description:</strong> @prescription.Medicine.Description</li>
+							<li class="list-group-item"><strong>Dose:</strong> @prescription.Dose</li>
+							<li class="list-group-item"><strong>Dose Unit:</strong> @prescription.DoseUnit</li>
+							<li class="list-group-item"><strong>Frequency:</strong> Every @prescription.FrequencyInHours hours</li>
+							<li class="list-group-item"><strong>Start Prescription:</strong> @prescription.StartPrescription.Date.ToShortDateString()</li>
+							<li class="list-group-item"><strong>End Prescription:</strong> @prescription.EndPrescription.Date.ToShortDateString()</li>
+						</ul>
+						<button type="button" class="btn custom-btn-primary mt-3" onclick="openEditModal(@prescription.PrescriptionId)">
+							Edit
+						</button>
+					</div>
+				</div>
+			}
+		}
+	</div>
+
 </div>		
 		
 <div class="modal fade" id="createModal" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
