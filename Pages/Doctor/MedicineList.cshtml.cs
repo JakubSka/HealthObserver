@@ -36,8 +36,8 @@ namespace HealthObserver.Pages.Doctor
 			if (!ModelState.IsValid || string.IsNullOrWhiteSpace(Medicine.Name) || string.IsNullOrWhiteSpace(Medicine.Description))
 			{
 				ModelState.AddModelError(string.Empty, "Name and Description are required fields.");
-				return Page();
-			}
+                return RedirectToPage("MedicineList");
+            }
 
 			var currentUser = await _userManager.GetUserAsync(User);
 			var userRoles = await _userManager.GetRolesAsync(currentUser);
