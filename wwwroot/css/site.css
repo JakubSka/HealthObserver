@@ -2,6 +2,10 @@ html {
     font-size: 14px;
 }
 
+body {
+    margin-bottom: 60px;
+}
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -12,14 +16,6 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-}
 
 form :focus {
     box-sizing: border-box;
@@ -61,9 +57,9 @@ input[type="radio"]:checked {
     color: #4BC0C0;
 }
 
-    .custom-header.hover, navbar-brand:hover {
-        color: #43ABAB;
-    }
+.custom-header.hover, navbar-brand:hover {
+    color: #43ABAB;
+}
 
 .custom-text {
     color: #43ABAB;
@@ -297,3 +293,6 @@ input[type="radio"]:checked {
     visibility: visible !important;
 }
 
+#myChart {
+    height: 350px;
+}
